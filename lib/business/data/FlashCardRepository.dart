@@ -11,7 +11,7 @@ class FlashCardRepository implements Repository {
   @override
   Future<int> create(entity) {
     return _localDataSource.createFlashCard(
-        (entity as FlashCard).originalContent, (entity).translatedContent);
+        (entity as FlashCard).originalContent, (entity).translatedContent, entity.deckId);
   }
 
   @override
@@ -29,9 +29,16 @@ class FlashCardRepository implements Repository {
     return _localDataSource.getFlashCards();
   }
 
+@override
+  Future<List> getAllByDeckId(id) {
+  return _localDataSource.getFlashCardsByDeckId(id);
+}
+
   @override
   Future<int> update(entity) {
     return _localDataSource.updateFlashCard(
-        (entity as FlashCard).id, (entity).originalContent, (entity).translatedContent);
+        (entity as FlashCard).id!, (entity).originalContent, (entity).translatedContent);
   }
+
+
 }
