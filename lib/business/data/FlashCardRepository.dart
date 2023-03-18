@@ -40,5 +40,9 @@ class FlashCardRepository implements Repository {
         (entity as FlashCard).id!, (entity).originalContent, (entity).translatedContent);
   }
 
+  Future<int?> rowCount(){
+    return _localDataSource.getFlashCardCount();
+  }
+
 
 }

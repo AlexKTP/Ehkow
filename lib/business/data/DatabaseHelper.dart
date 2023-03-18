@@ -11,8 +11,8 @@ class DatabaseHelper {
   DatabaseHelper();
 
   Future<void> _onCreate(Database database) async {
-    await database.execute('CREATE TABLE IF NOT EXISTS deck (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name TEXT);');
-    await database.execute('CREATE TABLE IF NOT EXISTS flash_card (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,original TEXT,translated TEXT,deck_id INTEGER NOT NULL, FOREIGN KEY (deck_id) REFERENCES deck(id));');
+    await database.execute('CREATE TABLE IF NOT EXISTS deck (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name TEXT, to_synchronize INTEGER);');
+    await database.execute('CREATE TABLE IF NOT EXISTS flash_card (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,original TEXT,translated TEXT,to_synchronize INTEGER, deck_id INTEGER NOT NULL, FOREIGN KEY (deck_id) REFERENCES deck(id));');
   }
 
   static Future _onConfigure(Database db) async {
@@ -38,7 +38,8 @@ class DatabaseHelper {
   Future<int> createFlashCard(String originalContent, String translatedContent, int deckId) async {
     final db = await getDb();
 
-    final data = {'original': originalContent, 'translated': translatedContent, 'deck_id': deckId};
+    final data = {'original': originalContent, 'translated': translatedContent, 'deck_id': deckId, 'to_synchronize': 1
+    };
     final id = await db.insert("flash_card", data,
         conflictAlgorithm: ConflictAlgorithm.replace);
     return id;
@@ -54,7 +55,7 @@ class DatabaseHelper {
           originalContent: maps[i]['original'] as String,
           translatedContent: maps[i]['translated'] as String,
           deckId: maps[i]['deck_id'] as int,
-          toSynchronize: maps[i]['to_synchronize'] as Status);
+          toSynchronize: maps[i]['to_synchronize'] == 0 ? Status.NONE : Status.TO_SYNCHRONIZE);
     });
     return list;
   }
@@ -68,12 +69,12 @@ class DatabaseHelper {
           originalContent: maps[i]['original'] as String,
           translatedContent: maps[i]['translated'] as String,
           deckId: maps[i]['deck_id'] as int,
-          toSynchronize: maps[i]['to_synchronize'] as Status);
+          toSynchronize: maps[i]['to_synchronize'] == 0 ? Status.NONE : Status.TO_SYNCHRONIZE);
     });
     return list;
   }
 
-  Future<FlashCard> findById(String id) async {
+  Future<FlashCard> findById(int id) async {
     final db = await getDb();
     var maps = await db
         .query("flash_card", where: "id = ?", limit: 1, whereArgs: [id]);
@@ -83,7 +84,7 @@ class DatabaseHelper {
           originalContent: maps[i]['original'] as String,
           translatedContent: maps[i]['translated'] as String,
           deckId: maps[i]['deck_id'] as int,
-          toSynchronize: maps[i]['to_synchronize'] as Status);
+          toSynchronize: maps[i]['to_synchronize'] == 0 ? Status.NONE : Status.TO_SYNCHRONIZE);
     });
     return list.first;
   }
@@ -108,13 +109,19 @@ class DatabaseHelper {
       debugPrint("Something went wrong when deleting an flash_card: $err");
     }
   }
+  
+  Future<int?> getFlashCardCount()async {
+    final db = await getDb();
+    final int? count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM flash_card'));
+    return count;
+  }
 
  ////
 
   Future<int> createDeck(String name) async {
     final db = await getDb();
 
-    final data = {'name': name, 'to_synchronize': Status.TO_SYNCHRONIZE};
+    final data = {'name': name, 'to_synchronize': 1};
     final id = await db.insert("deck", data,
         conflictAlgorithm: ConflictAlgorithm.replace);
     return id;
@@ -128,7 +135,7 @@ class DatabaseHelper {
       return Deck(
           id: maps[i]['id'] as int,
           name: maps[i]['name'] as String,
-          toSynchronize: maps[i]['to_synchronize'] as Status);
+          toSynchronize: maps[i]['to_synchronize'] == 0 ? Status.NONE : Status.TO_SYNCHRONIZE);
     });
     return list;
   }
@@ -141,7 +148,7 @@ class DatabaseHelper {
       return Deck(
           id: maps[i]['id'] as int,
           name: maps[i]['name'] as String,
-          toSynchronize: maps[i]['to_synchronize'] as Status);
+          toSynchronize: maps[i]['to_synchronize'] == 0 ? Status.NONE : Status.TO_SYNCHRONIZE);
     });
     return list.first;
   }
