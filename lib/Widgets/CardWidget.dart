@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flash_card_flutter/business/model/FlashCard.dart';
+import 'package:ehkow/business/model/FlashCard.dart';
 import 'package:flutter/material.dart';
 
 import '../business/data/DatabaseHelper.dart';

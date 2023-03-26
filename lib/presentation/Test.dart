@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flash_card_flutter/Widgets/CardWidget.dart';
+import 'package:ehkow/Widgets/CardWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -83,7 +83,7 @@ class _TestState extends State<Test> {
           flex: 2,
           child: IconButton(hoverColor: Colors.white,
               iconSize: 20.0,
-              icon: Icon(Icons.file_download_rounded),
+              icon: const Icon(Icons.file_download_rounded),
               onPressed: () {},
         ),
         )],
@@ -138,8 +138,7 @@ Future<void> importFile() async {
               FlashCard flashCard = FlashCard(
                   originalContent: a, translatedContent: b, deckId: 0);
               flashCard.deckId = id;
-              FlashCardRepository flashCardRepository =
-              FlashCardRepository(DatabaseHelper());
+              FlashCardRepository flashCardRepository = FlashCardRepository(DatabaseHelper());
               flashCardRepository.create(flashCard);
             }
           }

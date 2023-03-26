@@ -1,8 +1,8 @@
 flutter_native_splash:
   color: "#ffffff"
-  image: assets/images/wizletnogb.png
+  image: assets/images/wizlet_blue.png
 
   android_12:
-    image: assets/images/wizletnogb.png
+    image: assets/images/wizlet_blue.png
 
   web: false

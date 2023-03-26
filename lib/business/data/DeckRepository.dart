@@ -1,4 +1,4 @@
-import 'package:flash_card_flutter/business/model/Deck.dart';
+import 'package:ehkow/business/model/Deck.dart';
 
 import 'DatabaseHelper.dart';
 import 'Repository.dart';

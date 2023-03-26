@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:flash_card_flutter/Widgets/AppDrawer.dart';
-import 'package:flash_card_flutter/Widgets/CustomAppBar.dart';
-import 'package:flash_card_flutter/presentation/DeckScreen.dart';
+import 'package:ehkow/Widgets/RoundedCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+import '../Widgets/FlatAppBar.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -18,12 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Wizlet',
+      title: 'Ehkow',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true).copyWith(
-          primaryColor: const Color.fromRGBO(51, 102, 255,1)
+          primaryColor: const Color.fromRGBO(74, 78, 105, 1)
       ),
-      home: const MyHomePage(title: 'WIZLET'),
+      home: const MyHomePage(title: 'EHKOW'),
     );
   }
 }
@@ -51,16 +51,22 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: CustomAppBar(title: "WIZLET", context: context, onBackEnable: false,),
-      drawer: const AppDrawer(),
-      body: Center(
-        child: TextButton( child: const Text("Navigate"),onPressed: () {
-      Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const DeckScreen()),
-      );
-      },
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    ));
+      backgroundColor: const Color.fromRGBO(74, 78, 105, 1),
+      appBar:const PreferredSize(
+        preferredSize: Size.fromHeight(100),
+        child: FlatAppBar(showTitle: true, showBackButton: false, showSubtitle: true,),
+      ),
+      body:
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: const [
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: RoundedCard(),
+          )
+        ],
+      )
+    );
   }
 }

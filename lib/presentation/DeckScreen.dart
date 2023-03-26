@@ -1,6 +1,5 @@
-import 'package:flash_card_flutter/Widgets/CustomAppBar.dart';
+import 'package:ehkow/Widgets/FlatAppBar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class DeckScreen extends StatefulWidget {
   const DeckScreen({Key? key}) : super(key: key);
@@ -12,8 +11,11 @@ class DeckScreen extends StatefulWidget {
 class _DeckScreenState extends State<DeckScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: CustomAppBar(title: "DeckScreen", context: context, onBackEnable: true,),
+    return  const Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0),
+        child: FlatAppBar(showBackButton: true, showSubtitle: true, showTitle: true,),
+      ),
       body: Text("DeckScreen"),
     );
   }

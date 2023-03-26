@@ -1,4 +1,4 @@
-name: flash_card_flutter
+name: ehkow
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -44,6 +44,7 @@ dependencies:
   adaptive_theme: ^1.1.0
   flutter_native_splash: ^2.2.18
   flutter_svg: ^1.1.6
+  fluttertoast: ^8.0.7
 
 dev_dependencies:
   flutter_test:
