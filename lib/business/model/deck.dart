@@ -1,4 +1,4 @@
-import 'Status.dart';
+import 'status.dart';
 
 class Deck {
 

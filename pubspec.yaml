@@ -45,6 +45,9 @@ dependencies:
   flutter_native_splash: ^2.2.18
   flutter_svg: ^1.1.6
   fluttertoast: ^8.0.7
+  salomon_bottom_bar: ^3.3.1
+  scroll_indicator: ^0.0.3
+  flutter_heatmap_calendar: ^1.0.5
 
 dev_dependencies:
   flutter_test:

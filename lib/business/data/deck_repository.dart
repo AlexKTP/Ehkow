@@ -1,7 +1,7 @@
-import 'package:ehkow/business/model/Deck.dart';
+import 'package:ehkow/business/model/deck.dart';
 
-import 'DatabaseHelper.dart';
-import 'Repository.dart';
+import 'database_helper.dart';
+import 'repository.dart';
 
 class DeckRepository implements Repository {
   DeckRepository(this._localDataSource);

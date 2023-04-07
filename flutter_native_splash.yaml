@@ -1,8 +1,8 @@
 flutter_native_splash:
-  color: "#ffffff"
-  image: assets/images/wizlet_blue.png
+  color: "#4A4E69"
+  image: assets/images/ehkow_logo.png
 
   android_12:
-    image: assets/images/wizlet_blue.png
+    image: assets/images/ehkow_logo.png
 
   web: false

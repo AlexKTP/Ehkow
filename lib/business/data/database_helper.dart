@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../model/Deck.dart';
-import '../model/FlashCard.dart';
-import '../model/Status.dart';
+import '../model/deck.dart';
+import '../model/flashcard.dart';
+import '../model/status.dart';
 
 class DatabaseHelper {
   DatabaseHelper();

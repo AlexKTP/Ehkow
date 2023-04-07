@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:ehkow/business/model/FlashCard.dart';
+import 'package:ehkow/business/model/flashcard.dart';
 import 'package:flutter/material.dart';
 
-import '../business/data/DatabaseHelper.dart';
-import '../business/data/FlashCardRepository.dart';
+import '../business/data/database_helper.dart';
+import '../business/data/flashcard_repository.dart';
 
 class CardWidget extends StatefulWidget {
 

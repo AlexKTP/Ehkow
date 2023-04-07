@@ -1,6 +1,6 @@
-import '../model/FlashCard.dart';
-import 'DatabaseHelper.dart';
-import 'Repository.dart';
+import '../model/flashcard.dart';
+import 'database_helper.dart';
+import 'repository.dart';
 
 class FlashCardRepository implements Repository {
 

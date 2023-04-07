@@ -4,15 +4,15 @@ import 'dart:math';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:ehkow/Widgets/CardWidget.dart';
+import 'package:ehkow/Widgets/card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../business/data/DatabaseHelper.dart';
-import '../business/data/DeckRepository.dart';
-import '../business/data/FlashCardRepository.dart';
-import '../business/model/Deck.dart';
-import '../business/model/FlashCard.dart';
+import '../business/data/database_helper.dart';
+import '../business/data/deck_repository.dart';
+import '../business/data/flashcard_repository.dart';
+import '../business/model/deck.dart';
+import '../business/model/flashcard.dart';
 
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
