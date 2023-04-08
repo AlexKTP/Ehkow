@@ -62,17 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var _currentIndex = 0;
 
-  int _selectedIndex = 0;
-
   final _listOfRoundedCard = [];
 
   final DateTime now = DateTime.now();
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 20),
-                    child: Text(" 3 Week(s) in a row", style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(209, 249, 255, 1), fontSize: 15),),
+                    child: Text(' 3 Week(s) in a row', style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromRGBO(209, 249, 255, 1), fontSize: 15),),
                   )
                 ],
               ))

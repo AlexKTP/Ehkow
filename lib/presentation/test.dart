@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
-
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ehkow/Widgets/card_widget.dart';
@@ -32,12 +30,12 @@ class _TestState extends State<Test> {
       children: <Widget>[
         const Spacer(flex: 1),
         TextButton(
-          onPressed: () => { print("Go to dashboard")},
+          onPressed: () => { print('Go to dashboard')},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "DashBoard",
+                'DashBoard',
                 style: GoogleFonts.roboto(
                     color: Colors.white70,
                     fontWeight: FontWeight.w400,
@@ -94,7 +92,7 @@ class _TestState extends State<Test> {
 
 
 void changeCard() async {
-  final random = Random();
+  //final random = Random();
   FlashCardRepository flashCardRepository = FlashCardRepository(DatabaseHelper());
   var rows = await  flashCardRepository.rowCount();
   if (rows != null && rows > 0) {
@@ -116,7 +114,7 @@ Future<void> importFile() async {
       List<List<String>> finalList = [];
 
       for (var i = 0; i < fields.length; i++) {
-        finalList.add((fields[i].toString()).split(";"));
+        finalList.add((fields[i].toString()).split(';'));
       }
 
       Deck deck = Deck(name: 'First');
@@ -125,15 +123,15 @@ Future<void> importFile() async {
 
       for (var i = 0; i < finalList.length; i++) {
         String content = finalList[i][0].trim();
-        if(content.indexOf("(")>0){
-          String a = content.substring(content.indexOf("."), content.indexOf('('))
-              .replaceAll(".", "")
+        if(content.indexOf('(')>0){
+          String a = content.substring(content.indexOf('.'), content.indexOf('('))
+              .replaceAll('.', '')
               .trim();
-          int c = content.lastIndexOf("=");
-          if (c < 0) c = content.lastIndexOf("/");
+          int c = content.lastIndexOf('=');
+          if (c < 0) c = content.lastIndexOf('/');
           if (c > 0) {
-            String b = content.substring(c).replaceAll("=", "").replaceAll(
-                "/", "").trim();
+            String b = content.substring(c).replaceAll('=', '').replaceAll(
+                '/', '').trim();
             if (a != b) {
               FlashCard flashCard = FlashCard(
                   originalContent: a, translatedContent: b, deckId: 0);

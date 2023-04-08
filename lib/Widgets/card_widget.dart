@@ -8,9 +8,9 @@ import '../business/data/flashcard_repository.dart';
 
 class CardWidget extends StatefulWidget {
 
-  late int flashCard;
-  late FlashCardRepository flashCardRepository;
-  late FlashCard card;
+  late final int flashCard;
+  late final FlashCardRepository flashCardRepository;
+  late final FlashCard card;
 
   CardWidget(this.flashCard, {super.key}) {
     flashCardRepository = FlashCardRepository(DatabaseHelper());
@@ -47,7 +47,7 @@ class _CardWidgetState extends State<CardWidget> {
         child: Container(
           height: 200,
           alignment: Alignment.center,
-          child:Text(text != null ? text! : "Cliquez pour commencer", style: const TextStyle(color: Colors.white, fontSize: 30),),
+          child:Text(text != null ? text! : 'Cliquez pour commencer', style: const TextStyle(color: Colors.white, fontSize: 30),),
         ),
     ));
 
@@ -75,7 +75,7 @@ class _CardWidgetState extends State<CardWidget> {
       setState(() {
         widget.flashCardRepository.findById(widget.flashCard).then((value) => flashCard = value);
         text = _isTranslated ? flashCard?.translatedContent : flashCard?.originalContent;
-        log(text != null ? text! : "text null");
+        log(text != null ? text! : 'text null');
       });
     }
   }

@@ -2,11 +2,11 @@ import 'status.dart';
 
 class FlashCard {
 
-  int? id;
-  String originalContent;
-  String translatedContent;
-  int deckId;
-  Status? toSynchronize;
+  final int? id;
+  final String originalContent;
+  final String translatedContent;
+  late final int deckId;
+  final Status? toSynchronize;
 
 
   FlashCard({
