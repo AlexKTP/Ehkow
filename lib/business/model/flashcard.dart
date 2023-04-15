@@ -19,11 +19,11 @@ class FlashCard {
 
   FlashCard.fromMap(Map<String, dynamic> data)
       :
-        id = data['id'],
-        originalContent = data['original'],
-        translatedContent = data['translated'],
-        deckId = data['deck_id'],
-        toSynchronize = data['to_synchronize'];
+        id = data['id'] as int,
+        originalContent = data['original'] as String,
+        translatedContent = data['translated'] as String,
+        deckId = data['deck_id'] as int,
+        toSynchronize = data['to_synchronize'] as Status;
 
   Map<String, dynamic> toMap() {
     return {

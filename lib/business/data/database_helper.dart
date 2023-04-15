@@ -15,7 +15,7 @@ class DatabaseHelper {
     await database.execute('CREATE TABLE IF NOT EXISTS flash_card (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,original TEXT,translated TEXT,to_synchronize INTEGER, deck_id INTEGER NOT NULL, FOREIGN KEY (deck_id) REFERENCES deck(id));');
   }
 
-  static Future _onConfigure(Database db) async {
+  static Future<void> _onConfigure(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 

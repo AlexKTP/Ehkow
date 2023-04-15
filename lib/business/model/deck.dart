@@ -13,9 +13,9 @@ class Deck {
   });
 
   Deck.fromMap(Map<String, dynamic> data):
-        id = data['id'],
-        name = data['name'],
-        toSynchronize = data['to_synchronize'];
+        id = data['id'] as int,
+        name = data['name'] as String,
+        toSynchronize = data['to_synchronize'] as Status;
 
   Map<String, dynamic> toMap() {
     return {
