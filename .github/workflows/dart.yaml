@@ -1,0 +1,43 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Dart
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Standardize commits and be able to find issues related to each ones
+      # MIT License
+      - name: Check commit message
+        uses: technote-space/check-commit-message-action@v2.5.0
+        with:
+          pattern: '^#[0-9]+: .+'
+          word: 'issue'
+
+      - uses: actions/checkout@v3
+
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Analyze project source
+        run: dart analyze
+
+      - name: Check for unnecessary imports
+        run: dart analyze --fatal-infos --fatal-warnings --no-fatal-infos --no-fatal-warnings .
+
+      # Tests
+      - name: Run tests
+        run: dart test
