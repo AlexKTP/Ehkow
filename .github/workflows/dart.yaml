@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart
+name: FlashCards Github Actions
 
 on:
   push:
@@ -16,14 +16,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: echo "FlashCards Github Action was automatically triggered by a ${{ github.event_name }} event by ${{github.actor}}."
+      - run: echo "The name of the branch is ${{ github.ref }}."
+      - run: echo "The commit message is ${{github.event.head_commit.message}}."
 
       # Standardize commits and be able to find issues related to each ones
       # MIT License
       - name: Check commit message
-        uses: technote-space/check-commit-message-action@v2.5.0
+        if: "!contains(github.event.head_commit.message, 'issue')"
+        uses: actions/github-script@v3
         with:
-          pattern: '^#[0-9]+: .+'
-          word: 'issue'
+          script: |
+            core.setFailed('The commit message has to provide the relater issue's number!')
 
       - uses: actions/checkout@v3
 
@@ -41,3 +45,6 @@ jobs:
       # Tests
       - name: Run tests
         run: dart test
+
+      - name: Done
+        run: echo "All required steps have been checked."
