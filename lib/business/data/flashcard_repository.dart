@@ -2,7 +2,7 @@ import '../model/flashcard.dart';
 import 'database_helper.dart';
 import 'repository.dart';
 
-class FlashCardRepository implements Repository {
+class FlashCardRepository implements Repository<dynamic, dynamic> {
 
   FlashCardRepository(this._localDataSource);
 
@@ -16,12 +16,12 @@ class FlashCardRepository implements Repository {
 
   @override
   Future<FlashCard> findById(id) {
-    return _localDataSource.findById(id);
+    return _localDataSource.findById(id as int);
   }
 
   @override
   Future<void> delete(entity) {
-    return _localDataSource.deleteFlashCard((entity).id);
+    return _localDataSource.deleteFlashCard((entity).id as int);
   }
 
   @override
@@ -30,8 +30,8 @@ class FlashCardRepository implements Repository {
   }
 
 @override
-  Future<List> getAllByDeckId(id) {
-  return _localDataSource.getFlashCardsByDeckId(id);
+  Future<List<dynamic>> getAllByDeckId(id) {
+  return _localDataSource.getFlashCardsByDeckId(id as String);
 }
 
   @override

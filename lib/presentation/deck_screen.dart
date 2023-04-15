@@ -16,7 +16,7 @@ class _DeckScreenState extends State<DeckScreen> {
         preferredSize: Size.fromHeight(100.0),
         child: FlatAppBar(showBackButton: true, showSubtitle: true, showTitle: true,),
       ),
-      body: Text("DeckScreen"),
+      body: Text('DeckScreen'),
     );
   }
 }

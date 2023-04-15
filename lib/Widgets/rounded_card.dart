@@ -1,4 +1,3 @@
-import 'package:ehkow/utils/ToastMessage.dart';
 import 'package:flutter/material.dart';
 
 class RoundedCard extends StatelessWidget {
@@ -30,10 +29,10 @@ class RoundedCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
-              Text("Deck Title", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 30),),
-              Text("Description", style: TextStyle(color: Colors.black54),),
+              Text('Deck Title', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 30),),
+              Text('Description', style: TextStyle(color: Colors.black54),),
               Padding(padding: EdgeInsets.only(top: 30), child:
-              Text("Last Update: 10 Feb. 2023", style: TextStyle(color: Colors.black87),),)
+              Text('Last Update: 10 Feb. 2023', style: TextStyle(color: Colors.black87),),)
             ],
           ),
         ),

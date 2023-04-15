@@ -15,7 +15,7 @@ class DatabaseHelper {
     await database.execute('CREATE TABLE IF NOT EXISTS flash_card (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,original TEXT,translated TEXT,to_synchronize INTEGER, deck_id INTEGER NOT NULL, FOREIGN KEY (deck_id) REFERENCES deck(id));');
   }
 
-  static Future _onConfigure(Database db) async {
+  static Future<void> _onConfigure(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
@@ -40,7 +40,7 @@ class DatabaseHelper {
 
     final data = {'original': originalContent, 'translated': translatedContent, 'deck_id': deckId, 'to_synchronize': 1
     };
-    final id = await db.insert("flash_card", data,
+    final id = await db.insert('flash_card', data,
         conflictAlgorithm: ConflictAlgorithm.replace);
     return id;
   }
@@ -48,7 +48,7 @@ class DatabaseHelper {
   //READ
   Future<List<FlashCard>> getFlashCards() async {
     final db = await getDb();
-    var maps = await db.query('flash_card', orderBy: "id");
+    var maps = await db.query('flash_card', orderBy: 'id');
     var list = List.generate(maps.length, (i) {
       return FlashCard(
           id: maps[i]['id'] as int,
@@ -62,7 +62,7 @@ class DatabaseHelper {
 
   Future<List<FlashCard>> getFlashCardsByDeckId(String id) async {
     final db = await getDb();
-    var maps = await db.query('flash_card', orderBy: "id", where: 'deck_id = ?');
+    var maps = await db.query('flash_card', orderBy: 'id', where: 'deck_id = ?');
     var list = List.generate(maps.length, (i) {
       return FlashCard(
           id: maps[i]['id'] as int,
@@ -77,7 +77,7 @@ class DatabaseHelper {
   Future<FlashCard> findById(int id) async {
     final db = await getDb();
     var maps = await db
-        .query("flash_card", where: "id = ?", limit: 1, whereArgs: [id]);
+        .query('flash_card', where: 'id = ?', limit: 1, whereArgs: [id]);
     var list = List.generate(maps.length, (i) {
       return FlashCard(
           id: maps[i]['id'] as int,
@@ -96,7 +96,7 @@ class DatabaseHelper {
     final data = {'original': original, 'translated': translated, 'to_synchronize': Status.TO_SYNCHRONIZE};
 
     final result =
-    await db.update('flash_card', data, where: "id = ?", whereArgs: [id]);
+    await db.update('flash_card', data, where: 'id = ?', whereArgs: [id]);
     return result;
   }
 
@@ -104,9 +104,9 @@ class DatabaseHelper {
   Future<void> deleteFlashCard(int id) async {
     final db = await getDb();
     try {
-      await db.delete("flash_card", where: "id = ?", whereArgs: [id]);
+      await db.delete('flash_card', where: 'id = ?', whereArgs: [id]);
     } catch (err) {
-      debugPrint("Something went wrong when deleting an flash_card: $err");
+      debugPrint('Something went wrong when deleting an flash_card: $err');
     }
   }
   
@@ -122,7 +122,7 @@ class DatabaseHelper {
     final db = await getDb();
 
     final data = {'name': name, 'to_synchronize': 1};
-    final id = await db.insert("deck", data,
+    final id = await db.insert('deck', data,
         conflictAlgorithm: ConflictAlgorithm.replace);
     return id;
   }
@@ -130,7 +130,7 @@ class DatabaseHelper {
   //READ
   Future<List<Deck>> getAllDecks() async {
     final db = await getDb();
-    var maps = await db.query('deck', orderBy: "id");
+    var maps = await db.query('deck', orderBy: 'id');
     var list = List.generate(maps.length, (i) {
       return Deck(
           id: maps[i]['id'] as int,
@@ -143,7 +143,7 @@ class DatabaseHelper {
   Future<Deck> findDeckById(String id) async {
     final db = await getDb();
     var maps = await db
-        .query("deck", where: "id = ?", limit: 1, whereArgs: [id]);
+        .query('deck', where: 'id = ?', limit: 1, whereArgs: [id]);
     var list = List.generate(maps.length, (i) {
       return Deck(
           id: maps[i]['id'] as int,
@@ -160,7 +160,7 @@ class DatabaseHelper {
     final data = {'name': name, 'to_synchronize': Status.TO_SYNCHRONIZE};
 
     final result =
-    await db.update('deck', data, where: "id = ?", whereArgs: [id]);
+    await db.update('deck', data, where: 'id = ?', whereArgs: [id]);
     return result;
   }
 
@@ -168,9 +168,9 @@ class DatabaseHelper {
   Future<void> deleteDeck(int id) async {
     final db = await getDb();
     try {
-      await db.delete("deck", where: "id = ?", whereArgs: [id]);
+      await db.delete('deck', where: 'id = ?', whereArgs: [id]);
     } catch (err) {
-      debugPrint("Something went wrong when deleting an deck: $err");
+      debugPrint('Something went wrong when deleting an deck: $err');
     }
   }
 }
