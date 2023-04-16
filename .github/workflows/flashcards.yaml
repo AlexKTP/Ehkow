@@ -1,0 +1,48 @@
+name: FlashCards Github Actions
+'on':
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  get_commit:
+    name: Get Last Commit
+    runs-on: ubuntu-latest
+    outputs:
+      head-commit-message: ${{ steps.get_head_commit_message.outputs.headCommitMsg }}
+    steps:
+      - name: Get repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Print head git commit message
+        id: get_head_commit_message
+        run: echo "::set-output name=headCommitMsg::$(git show -s --format=%s)"
+  checks:
+    name: Check
+    runs-on: ubuntu-latest
+    needs: get_commit
+    steps:
+      - run: >-
+          echo "FlashCards Github Action was automatically triggered by a ${{
+          github.event_name }} event by ${{github.actor}}."
+      - run: 'echo "The name of the branch is ${{ github.ref }}."'
+      - name: Check commit message
+        if: ${{ !contains(needs.get_commit.outputs.head-commit-message, 'issue') }}
+        uses: actions/github-script@v3
+        with:
+          script: >
+            core.setFailed('The commit message has to provide the relater
+            issue's number!')
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: >-
+          dart analyze --fatal-infos --fatal-warnings --no-fatal-infos
+          --no-fatal-warnings .
+      - run: dart test
+      - run: echo "All required steps have been checked."
+

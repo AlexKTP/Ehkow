@@ -1,4 +1,4 @@
-package fr.yek.learn.flash_card_flutter
+package fr.yek.learn.ehkow
 
 import io.flutter.embedding.android.FlutterActivity
 
