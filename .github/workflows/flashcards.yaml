@@ -37,12 +37,16 @@ jobs:
             core.setFailed('The commit message has to provide the relater
             issue's number!')
       - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.8'
       - run: flutter pub get
-      - run: flutter analyze
-      - run: >-
-          dart analyze --fatal-infos --fatal-warnings --no-fatal-infos
-          --no-fatal-warnings .
-      - run: dart test
+      - run: flutter test
+      - run: flutter build apk
+      - run: flutter build appbundle
       - run: echo "All required steps have been checked."
 

@@ -7,7 +7,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:scroll_indicator/scroll_indicator.dart';
 
-import '../Widgets/flat_app_bar.dart';
+import 'Widgets/flat_app_bar.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
