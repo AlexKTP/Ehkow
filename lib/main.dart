@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:ehkow/Widgets/flash_card_widget.dart';
 import 'package:ehkow/Widgets/rounded_card.dart';
+import 'package:ehkow/business/data/flashcard_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -78,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return Container(
             padding: EdgeInsets.only(left: 10, right: 10),
             width: MediaQuery.of(context).size.width,
-            child: RoundedCard());
+            child: FlashCardWidget(index, FlashCardRepository()));
       },
       scrollDirection: Axis.horizontal,
       controller: scrollController,
