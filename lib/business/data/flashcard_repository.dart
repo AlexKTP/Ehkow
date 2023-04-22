@@ -4,9 +4,7 @@ import 'repository.dart';
 
 class FlashCardRepository implements Repository<dynamic, dynamic> {
 
-  FlashCardRepository(this._localDataSource);
-
-  final DatabaseHelper _localDataSource;
+  final DatabaseHelper _localDataSource = DatabaseHelper();
 
   @override
   Future<int> create(entity) {

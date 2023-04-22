@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:ehkow/Widgets/card_widget.dart';
+import 'package:ehkow/Widgets/flash_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -63,7 +63,7 @@ class _TestState extends State<Test> {
               ),
               Expanded(
                   flex: 6, // 60%
-                  child: CardWidget(cardDisplayed)
+                  child: FlashCardWidget(cardDisplayed, FlashCardRepository())
               ),
               Expanded(
                 flex: 2,
@@ -93,7 +93,7 @@ class _TestState extends State<Test> {
 
 void changeCard() async {
   //final random = Random();
-  FlashCardRepository flashCardRepository = FlashCardRepository(DatabaseHelper());
+  FlashCardRepository flashCardRepository = FlashCardRepository();
   var rows = await  flashCardRepository.rowCount();
   if (rows != null && rows > 0) {
     //setState(() {cardDisplayed = random.nextInt(rows);});
@@ -136,7 +136,7 @@ Future<void> importFile() async {
               FlashCard flashCard = FlashCard(
                   originalContent: a, translatedContent: b, deckId: 0);
               flashCard.deckId = id;
-              FlashCardRepository flashCardRepository = FlashCardRepository(DatabaseHelper());
+              FlashCardRepository flashCardRepository = FlashCardRepository();
               flashCardRepository.create(flashCard);
             }
           }
