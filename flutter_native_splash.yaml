@@ -1,5 +1,5 @@
 flutter_native_splash:
-  color: "#4A4E69"
+  color: "#B2B2B2"
   image: assets/images/ehkow_logo.png
 
   android_12:

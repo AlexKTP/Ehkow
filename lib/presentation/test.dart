@@ -66,7 +66,6 @@ class _TestState extends State<Test> {
                   flex: 6, // 60%
                   child: FlashCardWidget(
                       cardDisplayed,
-                      FlashCardRepository(),
                       MediaQuery.of(context).size.height,
                       MediaQuery.of(context).size.width)),
               Expanded(

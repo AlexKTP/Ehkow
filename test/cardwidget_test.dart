@@ -1,66 +1,80 @@
-import 'package:ehkow/Widgets/flash_card_widget.dart';
-import 'package:ehkow/business/data/flashcard_repository.dart';
+import 'package:ehkow/business/bloc/flashcard_bloc.dart';
+import 'package:ehkow/business/constants/constants.dart';
+import 'package:ehkow/business/model/exceptions/flashcard_not_found.dart';
 import 'package:ehkow/business/model/flashcard.dart';
+import 'package:ehkow/business/services/flashcard_service.dart';
+import 'package:ehkow/widgets/flash_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'cardwidget_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<FlashCardRepository>()])
+@GenerateNiceMocks([MockSpec<FlashCardService>()])
 void main() {
 
-  late FlashCardRepository mockRepo;
-  late FlashCardWidget widget;
+  final mockFlashCardService = MockFlashCardService();
 
-  testWidgets('flashcardwidget_textChangeWhenUserTap',
+  Widget _buildTestableWidget({required FlashCardBloc flashCardBloc}) {
+    return MaterialApp(
+      home: Scaffold(
+        body: BlocProvider<FlashCardBloc>(
+          create: (context) => flashCardBloc,
+          child: FlashCardWidget(1, 300, 300),
+        ),
+      ),
+    );
+  }
+
+  testWidgets('FlashCardWidget shows Loading when in LoadingState',
       (WidgetTester tester) async {
-    mockRepo = MockFlashCardRepository();
-    FlashCard flashCard = FlashCard(
-        originalContent: 'originalContent',
-        translatedContent: 'translatedContent',
-        deckId: 1);
-    when(mockRepo.findById(1))
-        .thenAnswer((Invocation) => Future(() => flashCard));
-    widget = FlashCardWidget(1, mockRepo, 100, 100);
+    final bloc = FlashCardBloc(1, mockFlashCardService);
+    when(mockFlashCardService.fetchFlashCardFunction(1))
+        .thenAnswer((_) async => throw Exception());
+    bloc.add(FetchFlashCardEvent());
 
-    // instanciate the widget
-    await tester.pumpWidget(
-        Directionality(textDirection: TextDirection.ltr, child: widget));
+    await tester.pumpWidget(_buildTestableWidget(flashCardBloc: bloc));
+    await tester.pump();
 
-    //This will ensure that all asynchronous operations,
-    // including any active timers,
-    // have completed before the test finishes.
-    await tester.pumpAndSettle();
-    expect(find.byType(Text), findsOneWidget);
-    expect(find.text('originalContent'), findsOneWidget);
-    expect(find.text('translatedContent'), findsNothing);
-
-    // Find the card and simulate a tap
-    final buttonFinder = find.byType(GestureDetector);
-    expect(buttonFinder, findsOneWidget);
-    await tester.tap(buttonFinder);
-
-    // again we have to call this method to ensure that
-    // all async functions have completed
-    await tester.pumpAndSettle();
-
-    // Test if the card has really flop
-    expect(find.byType(Text), findsOneWidget);
-    expect(find.text('originalContent'), findsNothing);
-    expect(find.text('translatedContent'), findsOneWidget);
-    await tester.pumpAndSettle();
+    expect(find.text('Loading...'), findsOneWidget);
   });
 
-  testWidgets('flashcardwidget_noFlashCardFound',  (WidgetTester tester) async {
-    // instanciate the widget
-    await tester.pumpWidget(
-        Directionality(textDirection: TextDirection.ltr, child: FlashCardWidget(-1, FlashCardRepository(), 100, 100)));
+  testWidgets('FlashCardWidget shows error message when in FlashCardErrorState', (WidgetTester tester) async {
+    final bloc = FlashCardBloc(1, mockFlashCardService);
+    final errorMessage = Constants.flashcard_not_found;
+    when(mockFlashCardService.fetchFlashCardFunction(1)).thenAnswer((_) async => throw FlashCardNotFound(1));
+    bloc.emit(FlashCardErrorState(errorMessage: errorMessage)); // Manually emit the error state
+    bloc.add(FetchFlashCardEvent());
 
+    await tester.pumpWidget(_buildTestableWidget(flashCardBloc: bloc));
     await tester.pumpAndSettle();
 
-    expect(find.byType(Text), findsOneWidget);
-    expect(find.text('Une erreur a eu lieu'), findsOneWidget);
+    expect(find.text(errorMessage), findsOneWidget);
   });
+
+  testWidgets('FlashCardWidget shows FlashCard content when in FlashCardSuccessState', (WidgetTester tester) async {
+    final flashCard = FlashCard(
+      originalContent: 'originalContent',
+      translatedContent: 'translatedContent',
+      deckId: 1,
+    );
+    final bloc = FlashCardBloc(1, mockFlashCardService);
+    when(mockFlashCardService.fetchFlashCardFunction(1)).thenAnswer((_) async => flashCard);
+    bloc.add(FetchFlashCardEvent());
+    bloc.emit(FlashCardSuccessState(flashCard: flashCard)); // Manually emit the success state
+
+    await tester.pumpWidget(_buildTestableWidget(flashCardBloc: bloc));
+    await tester.pumpAndSettle(); // Ensure widget rebuilds after emitting state
+
+    expect(find.text(flashCard.originalContent), findsOneWidget);
+
+    // Tap on the widget to toggle translation
+    await tester.tap(find.byType(InkWell));
+    await tester.pumpAndSettle(); // Ensure widget rebuilds after tapping
+
+    expect(find.text(flashCard.translatedContent), findsOneWidget);
+  });
+
 }

@@ -1,3 +1,4 @@
+import 'package:ehkow/business/constants/constants.dart';
 import 'package:ehkow/business/model/exceptions/flashcard_not_found.dart';
 import 'package:ehkow/business/services/flashcard_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,18 +26,19 @@ class FlashCardErrorState extends FlashCardState {
 }
 
 class FlashCardBloc extends Bloc<FetchFlashCardEvent, FlashCardState> {
-  int? flashCardId;
+  int flashCardId;
+  FlashCardService flashCardService;
 
-  FlashCardBloc(int this.flashCardId) : super(FlashCardInitialState()) {
+  FlashCardBloc(int this.flashCardId, this.flashCardService) : super(FlashCardInitialState()) {
     on<FetchFlashCardEvent>((event, emit) async {
       emit(FlashCardLoadingState());
 
       try {
-        final card = await FlashCardService.fetchFlashCard(flashCardId!);
+        final card = await flashCardService.fetchFlashCardFunction(flashCardId);
         emit(FlashCardSuccessState(flashCard: card as FlashCard));
       } catch (e) {
         if (e is FlashCardNotFound)
-          emit(FlashCardErrorState(errorMessage: e.message.toString()));
+          emit(FlashCardErrorState(errorMessage: Constants.flashcard_not_found));
       }
     });
   }
