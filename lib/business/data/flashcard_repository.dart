@@ -1,20 +1,29 @@
+import 'package:ehkow/business/data/flash_card_helper.dart';
+import 'package:ehkow/business/model/exceptions/deck_not_found_exception.dart';
+import 'package:ehkow/business/model/exceptions/flashcard_not_found.dart';
+
 import '../model/flashcard.dart';
-import 'database_helper.dart';
 import 'repository.dart';
 
 class FlashCardRepository implements Repository<dynamic, dynamic> {
-
-  final DatabaseHelper _localDataSource = DatabaseHelper();
+  final FlashCardHelper _localDataSource = FlashCardHelper();
 
   @override
   Future<int> create(entity) {
     return _localDataSource.createFlashCard(
-        (entity as FlashCard).originalContent, (entity).translatedContent, entity.deckId);
+        (entity as FlashCard).originalContent,
+        (entity).translatedContent,
+        entity.deckId);
   }
 
   @override
   Future<FlashCard> findById(id) {
-    return _localDataSource.findById(id as int);
+    try {
+      Future<FlashCard> result = _localDataSource.findById(id as int);
+      return result;
+    } on FlashCardNotFound {
+      throw FlashCardNotFound(id as int);
+    }
   }
 
   @override
@@ -27,20 +36,24 @@ class FlashCardRepository implements Repository<dynamic, dynamic> {
     return _localDataSource.getFlashCards();
   }
 
-@override
+  @override
   Future<List<dynamic>> getAllByDeckId(id) {
-  return _localDataSource.getFlashCardsByDeckId(id as String);
-}
+    try {
+      Future<List<FlashCard>> response =
+          _localDataSource.getFlashCardsByDeckId(id as String);
+      return response;
+    } on DeckNotFoundException {
+      throw DeckNotFoundException();
+    }
+  }
 
   @override
   Future<int> update(entity) {
-    return _localDataSource.updateFlashCard(
-        (entity as FlashCard).id!, (entity).originalContent, (entity).translatedContent);
+    return _localDataSource.updateFlashCard((entity as FlashCard).id!,
+        (entity).originalContent, (entity).translatedContent);
   }
 
-  Future<int?> rowCount(){
+  Future<int?> rowCount() {
     return _localDataSource.getFlashCardCount();
   }
-
-
 }

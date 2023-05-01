@@ -1,12 +1,10 @@
+import 'package:ehkow/business/data/deck_helper.dart';
 import 'package:ehkow/business/model/deck.dart';
 
-import 'database_helper.dart';
 import 'repository.dart';
 
-class DeckRepository implements Repository<dynamic, dynamic>{
-  DeckRepository(this._localDataSource);
-
-  final DatabaseHelper _localDataSource;
+class DeckRepository implements Repository<dynamic, dynamic> {
+  final DeckHelper _localDataSource = DeckHelper();
 
   @override
   Future<int> create(entity) {
@@ -20,7 +18,7 @@ class DeckRepository implements Repository<dynamic, dynamic>{
 
   @override
   Future<void> delete(entity) {
-    return _localDataSource.deleteFlashCard((entity).id as int);
+    return _localDataSource.deleteDeck(entity as int);
   }
 
   @override

@@ -1,25 +1,21 @@
 import 'status.dart';
 
 class FlashCard {
-
   final int? id;
   final String originalContent;
   final String translatedContent;
   late final int deckId;
   final Status? toSynchronize;
 
-
-  FlashCard({
-    this.id,
-    required this.originalContent,
-    required this.translatedContent,
-    required this.deckId,
-    this.toSynchronize
-  });
+  FlashCard(
+      {this.id,
+      required this.originalContent,
+      required this.translatedContent,
+      required this.deckId,
+      this.toSynchronize});
 
   FlashCard.fromMap(Map<String, dynamic> data)
-      :
-        id = data['id'] as int,
+      : id = data['id'] as int,
         originalContent = data['original'] as String,
         translatedContent = data['translated'] as String,
         deckId = data['deck_id'] as int,

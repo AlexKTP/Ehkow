@@ -1,7 +1,6 @@
 import 'package:ehkow/Widgets/flash_card_widget.dart';
 import 'package:ehkow/business/data/flashcard_repository.dart';
 import 'package:ehkow/business/model/flashcard.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -24,7 +23,7 @@ void main() {
         deckId: 1);
     when(mockRepo.findById(1))
         .thenAnswer((Invocation) => Future(() => flashCard));
-    widget = FlashCardWidget(1, mockRepo);
+    widget = FlashCardWidget(1, mockRepo, 100, 100);
 
     // instanciate the widget
     await tester.pumpWidget(
@@ -57,7 +56,7 @@ void main() {
   testWidgets('flashcardwidget_noFlashCardFound',  (WidgetTester tester) async {
     // instanciate the widget
     await tester.pumpWidget(
-        Directionality(textDirection: TextDirection.ltr, child: FlashCardWidget(-1, FlashCardRepository())));
+        Directionality(textDirection: TextDirection.ltr, child: FlashCardWidget(-1, FlashCardRepository(), 100, 100)));
 
     await tester.pumpAndSettle();
 
