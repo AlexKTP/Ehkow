@@ -26,13 +26,14 @@ class FlashCardsErrorState extends FlashCardsState {
 
 class FlashCardListBloc extends Bloc<FetchFlashCardsEvent, FlashCardsState> {
   int? deckId;
+  FlashCardService service;
 
-  FlashCardListBloc(int this.deckId) : super(FlashCardsInitialState()) {
+  FlashCardListBloc(int this.deckId, this.service) : super(FlashCardsInitialState()) {
     on<FetchFlashCardsEvent>((event, emit) async {
       emit(FlashCardsLoadingState());
 
       try {
-        final cardList = await FlashCardService.fetchCardsByDeckId(deckId!);
+        final cardList = await service.getFlashCardByDeckId(deckId!);
         emit(
             FlashCardsSuccessState(flashCardList: cardList as List<FlashCard>));
       } catch (e) {

@@ -1,3 +1,4 @@
+import 'package:ehkow/business/constants/constants.dart';
 import 'package:ehkow/business/model/deck.dart';
 import 'package:ehkow/business/services/deck_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,16 +25,16 @@ class DecksErrorState extends DecksState {
 
 class DeckListBloc extends Bloc<FetchDecksEvent, DecksState> {
   int? deckId;
+  DeckService deckService;
 
-  DeckListBloc() : super(DecksInitialState()) {
+  DeckListBloc(this.deckService) : super(DecksInitialState()) {
     on<FetchDecksEvent>((event, emit) async {
       emit(DecksLoadingState());
-
       try {
-        final deckList = await DeckService.fetchDeckList();
+        final deckList = await deckService.getDeckList();
         emit(DecksSuccessState(deckList: deckList as List<Deck>));
       } catch (e) {
-        emit(DecksErrorState(errorMessage: e.toString()));
+        emit(DecksErrorState(errorMessage: Constants.basic_error));
       }
     });
   }

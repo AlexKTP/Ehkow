@@ -1,9 +1,10 @@
+import 'package:ehkow/business/model/deck.dart';
 import 'package:ehkow/utils/ToastMessage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FadedListView extends StatelessWidget {
-  final List<dynamic> _list;
+  final List<Deck> _list;
 
   FadedListView(this._list);
 
@@ -45,7 +46,7 @@ class FadedListView extends StatelessWidget {
                             itemCount: _list.length,
                             itemBuilder: (context, index) => ListTile(
                               title: Text(
-                                _list[index] as String,
+                                _list[index].name,
                                 style: GoogleFonts.bebasNeue(
                                     fontSize: 50.0, color: Colors.black87),
                               ),

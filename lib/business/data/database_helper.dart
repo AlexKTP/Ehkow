@@ -10,7 +10,7 @@ class DatabaseHelper {
     await database.execute(
         'CREATE TABLE IF NOT EXISTS deck (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name TEXT, to_synchronize INTEGER);');
     await database.execute(
-        'CREATE TABLE IF NOT EXISTS flash_card (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,original TEXT,translated TEXT,to_synchronize INTEGER, deck_id INTEGER NOT NULL, FOREIGN KEY (deck_id) REFERENCES deck(id));');
+        'CREATE TABLE IF NOT EXISTS flash_card (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,original TEXT,translated TEXT,to_synchronize INTEGER, deck_id INTEGER NOT NULL, FOREIGN KEY (deck_id) REFERENCES deck(id) ON DELETE CASCADE);');
   }
 
   static Future<void> _onConfigure(Database db) async {

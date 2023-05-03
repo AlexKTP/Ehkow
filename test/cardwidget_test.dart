@@ -31,7 +31,7 @@ void main() {
   testWidgets('FlashCardWidget shows Loading when in LoadingState',
       (WidgetTester tester) async {
     final bloc = FlashCardBloc(1, mockFlashCardService);
-    when(mockFlashCardService.fetchFlashCardFunction(1))
+    when(mockFlashCardService.getFlashCard(1))
         .thenAnswer((_) async => throw Exception());
     bloc.add(FetchFlashCardEvent());
 
@@ -44,7 +44,7 @@ void main() {
   testWidgets('FlashCardWidget shows error message when in FlashCardErrorState', (WidgetTester tester) async {
     final bloc = FlashCardBloc(1, mockFlashCardService);
     final errorMessage = Constants.flashcard_not_found;
-    when(mockFlashCardService.fetchFlashCardFunction(1)).thenAnswer((_) async => throw FlashCardNotFound(1));
+    when(mockFlashCardService.getFlashCard(1)).thenAnswer((_) async => throw FlashCardNotFound(1));
     bloc.emit(FlashCardErrorState(errorMessage: errorMessage)); // Manually emit the error state
     bloc.add(FetchFlashCardEvent());
 
@@ -61,7 +61,7 @@ void main() {
       deckId: 1,
     );
     final bloc = FlashCardBloc(1, mockFlashCardService);
-    when(mockFlashCardService.fetchFlashCardFunction(1)).thenAnswer((_) async => flashCard);
+    when(mockFlashCardService.getFlashCard(1)).thenAnswer((_) async => flashCard);
     bloc.add(FetchFlashCardEvent());
     bloc.emit(FlashCardSuccessState(flashCard: flashCard)); // Manually emit the success state
 

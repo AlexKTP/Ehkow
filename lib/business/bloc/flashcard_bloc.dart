@@ -34,7 +34,7 @@ class FlashCardBloc extends Bloc<FetchFlashCardEvent, FlashCardState> {
       emit(FlashCardLoadingState());
 
       try {
-        final card = await flashCardService.fetchFlashCardFunction(flashCardId);
+        final card = await flashCardService.getFlashCard(flashCardId);
         emit(FlashCardSuccessState(flashCard: card as FlashCard));
       } catch (e) {
         if (e is FlashCardNotFound)
