@@ -33,8 +33,9 @@ jobs:
         if: ${{ !contains(needs.get_commit.outputs.head-commit-message, 'issue') }}
         uses: actions/github-script@v3
         with:
-          script: >
-            core.setFailed('The commit message has to provide the related issue''s number!')
+          script: |
+            const core = require('@actions/core');
+            core.setFailed("The commit message has to provide the related issue's number!");
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v2
         with:
