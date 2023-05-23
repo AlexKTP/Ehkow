@@ -27,26 +27,30 @@ class RoundedPP extends StatelessWidget {
           ),
         ],
       ),
-      child: isUrl(imageUrl) ?
-      ClipOval(
-        child: SvgPicture.asset(
-          imageUrl,
-          semanticsLabel: 'Profile Picture',
-          height: 150,
-          width: 150,
-        ),
-      ): ClipOval(
-        child: Image(image: NetworkImage(imageUrl),height: 150, width: 150, fit: BoxFit.fill,)
-      ),
+      child: isUrl(imageUrl)
+          ? ClipOval(
+              child: SvgPicture.asset(
+                imageUrl,
+                semanticsLabel: 'Profile Picture',
+                height: 150,
+                width: 150,
+              ),
+            )
+          : ClipOval(
+              child: Image(
+              image: NetworkImage(imageUrl),
+              height: 150,
+              width: 150,
+              fit: BoxFit.fill,
+            )),
     );
   }
 
-  bool isUrl(String imageUrl){
-      Uri? uri = Uri.tryParse(imageUrl);
-      if (uri == null) {
-        return false;
-      }
-      return uri.hasScheme && uri.hasAuthority;
+  bool isUrl(String imageUrl) {
+    Uri? uri = Uri.tryParse(imageUrl);
+    if (uri == null) {
+      return false;
     }
+    return uri.hasScheme && uri.hasAuthority;
+  }
 }
-

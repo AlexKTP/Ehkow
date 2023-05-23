@@ -16,7 +16,7 @@ class RoundedCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: Container(
-          height: MediaQuery.of(context).size.height/3,
+          height: MediaQuery.of(context).size.height / 3,
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               begin: Alignment.bottomRight,
@@ -29,10 +29,24 @@ class RoundedCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
-              Text('Deck Title', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 30),),
-              Text('Description', style: TextStyle(color: Colors.black54),),
-              Padding(padding: EdgeInsets.only(top: 30), child:
-              Text('Last Update: 10 Feb. 2023', style: TextStyle(color: Colors.black87),),)
+              Text(
+                'Deck Title',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                    fontSize: 30),
+              ),
+              Text(
+                'Description',
+                style: TextStyle(color: Colors.black54),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: Text(
+                  'Last Update: 10 Feb. 2023',
+                  style: TextStyle(color: Colors.black87),
+                ),
+              )
             ],
           ),
         ),
@@ -40,5 +54,3 @@ class RoundedCard extends StatelessWidget {
     );
   }
 }
-
-

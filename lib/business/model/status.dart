@@ -1,4 +1,1 @@
-enum Status {
-  NONE,
-  TO_SYNCHRONIZE
-}
+enum Status { NONE, TO_SYNCHRONIZE }
