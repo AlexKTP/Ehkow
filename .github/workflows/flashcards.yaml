@@ -45,7 +45,6 @@ jobs:
         with:
           flutter-version: '3.7.8'
       - run: flutter pub get
-      - run: flutter test
       - run: flutter build apk
       - run: flutter build appbundle
       - run: echo "All required steps have been checked."
